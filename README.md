@@ -1,45 +1,82 @@
+# 🎉 Event Booking Platform
+
+Event Booking is a full-stack MERN web application that allows users to browse, book, and manage events effortlessly. The platform supports user authentication, event exploration, and booking management, providing a seamless experience for both event organizers and attendees.
 
 ### 🔐 Hero Page
 ![Hero Page](./website-demo/Hero-Page.jpeg)
 ---
 ---
 
-# 🎫 Event Booking Platform
 
-A modern and responsive Event Booking web application that allows users to browse, explore, and book events seamlessly.
-
-🌐 **Live at**: [https://event-bookin.netlify.app/](https://event-bookin.netlify.app/)
-
----
-
-## ✨ Overview
-
-The Event Booking Platform is a front-end application built to simulate a real-world event booking system. With a sleek and modern interface, users can explore upcoming events and book their spots easily.
-
-![Hero Section Screenshot](./screenshots/hero-section.png) <!-- Replace with actual image if available -->
+### 🌐 Live Site  
+👉 [Visit the Event Booking App](https://event-bookin.netlify.app/)
 
 ---
 
 ## 🚀 Features
 
-- 🏠 Beautiful Landing Page with smooth animations
-- 🔍 Browse available events
-- 📆 Book an event in just a few clicks
-- 🎨 Responsive design across devices
-- 💡 Clean UI/UX for seamless navigation
+- 🔐 User **Signup/Login** functionality with JWT-based authentication
+- 📅 Browse through a list of upcoming and ongoing **events**
+- 📥 Book your desired event with a single click
+- 🧾 View and manage your **booked events**
+- ✨ Smooth and responsive **UI/UX** using React and Tailwind CSS
+- ⚙️ RESTful API integration for managing users and events
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: HTML, CSS, JavaScript
-- **Styling**: Tailwind CSS (optional, if used)
-- **Animation**: AOS (Animate on Scroll) Library
-- **Hosting**: Netlify
+### 💻 Frontend
+- **React.js**
+- **Axios** for API communication
+- **Tailwind CSS** for styling
+- **Netlify** for deployment
+
+### 🧠 Backend
+- **Node.js** & **Express.js**
+- **JWT** for secure authentication
+- **CORS**, **dotenv**, and other helpful middleware
+- **Render** for backend deployment
+
+### 🗄️ Database
+- **MySQL** hosted on **Aiven Console**
+- **Sequelize ORM** (if used) or **mysql2** library
 
 ---
 
-## 📂 Folder Structure
+## 📂 Project Structure
 
 ```bash
-event-booking/
+Event-Booking-System-
+|---server ( our backend )
+|---src
+|-------api
+|-------components
+|-------context
+|-------pages
+|-------routes
+|-------utils
+|-------App.css
+|-------App.jsx
+|-------index.css
+|-------index.js
+
+# To run in it your local environment 
+cd Event-Booking-System
+npm install
+npm run dev
+#open new terminal inside current directory
+# create a .env file
+# inside it write your variables
+PORT=4000
+JWT_SECRET=YOUR_JWT_SECRET
+DB_HOST=YOUR_DB_HOAT
+DB_PORT=YOUR_DB_PORT
+DB_USER=YOUE_DB_USER
+DB_PASSWORD=YOUR_DB_PASSWORD
+DB_NAME=YOUR_DB_NAME
+cd server
+npm install
+
+```
+
