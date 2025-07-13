@@ -1,6 +1,6 @@
 
 ### 🔐 Hero Page
-![Hero Page](./website-demo/Hero-Page.jpeg)
+![Hero Page](./website-demo/Hero-Page.png)
 ---
 ---
 
