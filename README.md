@@ -65,7 +65,8 @@ Event-Booking-System-
 cd Event-Booking-System
 npm install
 npm run dev
-#open new terminal inside current directory
+# open new terminal inside current directory
+cd server
 # create a .env file
 # inside it write your variables
 PORT=4000
@@ -75,7 +76,9 @@ DB_PORT=YOUR_DB_PORT
 DB_USER=YOUE_DB_USER
 DB_PASSWORD=YOUR_DB_PASSWORD
 DB_NAME=YOUR_DB_NAME
-cd server
+
+#then open terminal
+
 npm install
 
 ```
