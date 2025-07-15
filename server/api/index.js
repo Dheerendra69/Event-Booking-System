@@ -13,7 +13,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://event-bookin.netlify.app"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://your-frontend-domain.com",
+    ],
   })
 );
 

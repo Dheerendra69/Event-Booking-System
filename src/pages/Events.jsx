@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { fetchEvents, bookEvent } from "../api/eventAPI";
+import { fetchEvents } from "../api/eventAPI";
 import EventCard from "../components/EventCard";
 import Loader from "../components/Loader";
+import { useNavigate } from "react-router-dom";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchEvents().then((res) => {
@@ -14,23 +16,20 @@ const Events = () => {
     });
   }, []);
 
-  const handleBook = async (event_id) => {
-    try {
-      await bookEvent(event_id);
-      alert("Booking successful!");
-    } catch (err) {
-      alert("You must be logged in to book.");
-    }
-  };
-
   if (loading) return <Loader />;
 
   return (
-      <div className="p-6 grid md:grid-cols-3 sm:grid-cols-2 gap-6">
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} onBook={handleBook} />
-        ))}
-      </div>
+    <div className="p-6 grid md:grid-cols-3 sm:grid-cols-2 gap-6">
+      {events.map((event) => (
+        <div
+          key={event.id}
+          onClick={() => navigate(`/event/${event.id}`)}
+          className="cursor-pointer"
+        >
+          <EventCard event={event} />
+        </div>
+      ))}
+    </div>
   );
 };
 

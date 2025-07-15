@@ -1,85 +1,70 @@
-# 🎉 Event Booking Platform
+# Getting Started with Create React App
 
-Event Booking is a full-stack MERN web application that allows users to browse, book, and manage events effortlessly. The platform supports user authentication, event exploration, and booking management, providing a seamless experience for both event organizers and attendees.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### 🔐 Hero Page
-![Hero Page](./website-demo/Hero-Page.jpeg)
----
----
+## Available Scripts
 
+In the project directory, you can run:
 
-### 🌐 Live Site  
-👉 [Visit the Event Booking App](https://event-bookin.netlify.app/)
+### `npm start`
 
----
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## 🚀 Features
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-- 🔐 User **Signup/Login** functionality with JWT-based authentication
-- 📅 Browse through a list of upcoming and ongoing **events**
-- 📥 Book your desired event with a single click
-- 🧾 View and manage your **booked events**
-- ✨ Smooth and responsive **UI/UX** using React and Tailwind CSS
-- ⚙️ RESTful API integration for managing users and events
+### `npm test`
 
----
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## 🛠️ Tech Stack
+### `npm run build`
 
-### 💻 Frontend
-- **React.js**
-- **Axios** for API communication
-- **Tailwind CSS** for styling
-- **Netlify** for deployment
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### 🧠 Backend
-- **Node.js** & **Express.js**
-- **JWT** for secure authentication
-- **CORS**, **dotenv**, and other helpful middleware
-- **Render** for backend deployment
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-### 🗄️ Database
-- **MySQL** hosted on **Aiven Console**
-- **Sequelize ORM** (if used) or **mysql2** library
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
----
+### `npm run eject`
 
-## 📂 Project Structure
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-```bash
-Event-Booking-System-
-|---server ( our backend )
-|---src
-|-------api
-|-------components
-|-------context
-|-------pages
-|-------routes
-|-------utils
-|-------App.css
-|-------App.jsx
-|-------index.css
-|-------index.js
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-# To run in it your local environment 
-cd Event-Booking-System
-npm install
-npm run dev
-# open new terminal inside current directory
-cd server
-# create a .env file
-# inside it write your variables
-PORT=4000
-JWT_SECRET=YOUR_JWT_SECRET
-DB_HOST=YOUR_DB_HOAT
-DB_PORT=YOUR_DB_PORT
-DB_USER=YOUE_DB_USER
-DB_PASSWORD=YOUR_DB_PASSWORD
-DB_NAME=YOUR_DB_NAME
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-#then open terminal
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-npm install
+## Learn More
 
-```
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

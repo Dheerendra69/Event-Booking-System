@@ -1,59 +1,59 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import MyBookings from "../pages/MyBookings";
-import CreateEvent from "../pages/CreateEvent";
+import CreateEvent from "../pages/admin/CreateEvent";
 import EventDetails from "../pages/EventDetails";
-import AdminDashboard from "../pages/AdminDashboard";
+import AdminDashboard from "../pages/admin/AdminDashboard";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Events from "../pages/Events";
-
-const PrivateRoute = ({ children }) => {
-  const token = localStorage.getItem("token");
-  console.log("private routes not allowed for you");
-  return token ? children : <Navigate to="/login" />;
-};
-
-const AdminRoute = ({ children }) => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  console.log("Admin routes not allowed for you");
-  return user?.role === "admin" ? children : <Navigate to="/" />;
-};
+import CreateUser from "../pages/admin/CreateUser";
+import GuestRoute from "./GuestRoute";
+import AdminRoute from "./AdminRoutes";
+import UserRoutes from "./UserRoutes";
+import AllBookingsList from "../pages/admin/AllBookingsList";
+import EditEvent from "../pages/admin/EditEvent";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/events" element={<Events />} />
       <Route path="/" element={<Home />} />
-      <Route path="/events/:id" element={<EventDetails />} />
+      <Route path="/events" element={<Events />} />
+      <Route path="/event/:id" element={<EventDetails />} />
+
       <Route
-        path="/bookings"
+        path="/login"
         element={
-          <PrivateRoute>
-            <MyBookings />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/create-event"
-        element={
-          <AdminRoute>
-            <CreateEvent />
-          </AdminRoute>
-        }
-      />
-      <Route
-        path="/admin"
-        element={
-          <AdminRoute>
-            <AdminDashboard />
-          </AdminRoute>
+          <GuestRoute>
+            <Login />
+          </GuestRoute>
         }
       />
 
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route
+        path="/register"
+        element={
+          <GuestRoute>
+            <Register />
+          </GuestRoute>
+        }
+      />
+      <Route
+        path="/bookings"
+        element={
+          <UserRoutes>
+            <MyBookings />
+          </UserRoutes>
+        }
+      />
+      <Route element={<AdminRoute />}>
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/createuser" element={<CreateUser />} />
+        <Route path="/admin/allbookings" element={<AllBookingsList />} />
+        <Route path="/admin/createevent" element={<CreateEvent />} />
+        <Route path="/admin/editevent/:id" element={<EditEvent />} />
+      </Route>
     </Routes>
   );
 };

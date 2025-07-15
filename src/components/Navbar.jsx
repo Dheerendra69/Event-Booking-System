@@ -19,9 +19,12 @@ const Navbar = () => {
       <div className="space-x-4">
         {user ? (
           <>
-            <Link to="/bookings">My Bookings</Link>
+            {user.role !== "admin" && <Link to="/bookings">My Bookings</Link>}
             {user.role === "admin" && <Link to="/admin">Admin</Link>}
-            <button onClick={handleLogout} className="ml-4 bg-red-600 px-3 py-1 rounded-md">
+            <button
+              onClick={handleLogout}
+              className="ml-4 bg-red-600 px-3 py-1 rounded-md"
+            >
               Logout
             </button>
           </>

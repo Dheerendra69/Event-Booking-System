@@ -4,12 +4,31 @@ import Loader from "../components/Loader";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    fetchMyBookings().then((res) => setBookings(res.data));
+    fetchMyBookings()
+      .then((res) => {
+        setTimeout(() => {
+          setBookings(res.data);
+          setLoading(false);
+        }, 1000);
+      })
+      .catch((err) => {
+        console.error("Error fetching bookings:", err);
+        setLoading(false);
+      });
   }, []);
 
-  if (!bookings.length) return <Loader />;
+  if (loading) return <Loader />;
+
+  if (!bookings.length) {
+    return (
+      <div className="p-6 text-center text-gray-600">
+        <p>No bookings found.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6">
