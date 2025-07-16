@@ -41,7 +41,6 @@ const AllBookingsList = () => {
     <div className="p-6">
       <h1 className="text-xl font-bold mb-6">📋 All Bookings</h1>
 
-      {/* Filters */}
       <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
         <input
           type="text"
@@ -65,7 +64,6 @@ const AllBookingsList = () => {
         />
       </div>
 
-      {/* Results */}
       <ul className="space-y-3">
         {filteredBookings.length === 0 ? (
           <p className="text-center text-gray-500">

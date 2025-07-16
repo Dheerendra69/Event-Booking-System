@@ -2,14 +2,59 @@ const eventModel = require("../models/Event");
 const db = require("../config/dbConnection");
 
 const createEvent = (req, res) => {
-  const { title, description, date, location, capacity } = req.body;
+  const {
+    title,
+    description,
+    date,
+    location,
+    capacity,
+    banner_image_url,
+    thumbnail_url,
+    start_time,
+    end_time,
+    category,
+    organizer_name,
+    organizer_email,
+    venue_details,
+    is_online,
+    meeting_link,
+    price,
+    tags,
+    status,
+  } = req.body;
 
-  if (!title || !date || !location || !capacity) {
+  if (
+    !title ||
+    !date ||
+    !location ||
+    !capacity ||
+    !description ||
+    !venue_details
+  ) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   eventModel.createEvent(
-    { title, description, date, location, capacity },
+    {
+      title,
+      description,
+      date,
+      location,
+      capacity,
+      banner_image_url,
+      thumbnail_url,
+      start_time,
+      end_time,
+      category,
+      organizer_name,
+      organizer_email,
+      venue_details,
+      is_online,
+      meeting_link,
+      price,
+      tags,
+      status,
+    },
     (err, result) => {
       if (err) return res.status(500).json({ error: err });
       res.status(201).json({

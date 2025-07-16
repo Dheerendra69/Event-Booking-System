@@ -44,7 +44,6 @@ const AllEventsList = () => {
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6">📝 All Events</h2>
 
-      {/* Filters */}
       <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
         <input
           type="text"
@@ -68,7 +67,6 @@ const AllEventsList = () => {
         />
       </div>
 
-      {/* Event List */}
       <ul className="space-y-3">
         {filteredEvents.length === 0 ? (
           <p className="text-center text-gray-500">No matching events found.</p>

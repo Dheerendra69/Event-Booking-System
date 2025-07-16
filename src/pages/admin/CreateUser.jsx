@@ -1,4 +1,3 @@
-// src/pages/CreateUser.jsx
 import { useState, useContext } from "react";
 import axios from "../../api/eventAPI";
 import { AuthContext } from "../../context/AuthContext";
@@ -17,7 +16,6 @@ const CreateUser = () => {
 
   const [message, setMessage] = useState("");
 
-  // Redirect if not admin
   if (user?.role !== "admin") {
     navigate("/unauthorized");
     return null;

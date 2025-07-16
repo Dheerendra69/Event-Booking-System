@@ -24,11 +24,9 @@ const EventSummary = () => {
         const res = await fetchEventById(id);
         setEvent(res.data);
 
-        // Fetch total number of people attended
         const bookingsRes = await API.get(`/events/${id}/attendees-count`);
         setAttendeesCount(bookingsRes.data.totalAttendees);
 
-        // Fetch reviews only if event has ended
         if (new Date() > new Date(`${res.data.date}`)) {
           const reviewRes = await fetchReviews(id);
           setReviews(reviewRes.data);
@@ -50,7 +48,6 @@ const EventSummary = () => {
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md">
       <h1 className="text-3xl font-bold mb-4">📊 Event Summary (Admin)</h1>
 
-      {/* Basic Info */}
       <h2 className="text-2xl font-semibold mb-2">{event.title}</h2>
       <p className="text-gray-600 mb-2">
         📅 {new Date(event.date).toLocaleDateString()}{" "}
@@ -64,7 +61,6 @@ const EventSummary = () => {
       <p>👥 Capacity: {event.capacity}</p>
       <p>💰 Price: {event.price === 0 ? "Free" : `₹${event.price}`}</p>
 
-      {/* Attendance */}
       <div className="mt-6 border-t pt-4">
         <h3 className="text-xl font-semibold mb-2">✅ Attendance</h3>
         <p>
@@ -73,7 +69,6 @@ const EventSummary = () => {
         </p>
       </div>
 
-      {/* Reviews */}
       {eventEnded() && (
         <div className="mt-6 border-t pt-4">
           <h3 className="text-xl font-semibold mb-2">🌟 Reviews</h3>

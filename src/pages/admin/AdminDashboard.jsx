@@ -3,7 +3,6 @@ import { NavLink, Outlet } from "react-router-dom";
 const AdminDashboard = () => {
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
       <aside className="w-60 bg-gray-100 border-r p-4 space-y-4">
         <h2 className="text-xl font-bold mb-4">Admin Panel</h2>
         <NavLink
@@ -56,7 +55,6 @@ const AdminDashboard = () => {
         </NavLink>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 p-6 overflow-y-auto">
         <Outlet /> 
       </main>

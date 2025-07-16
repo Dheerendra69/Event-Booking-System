@@ -30,7 +30,7 @@ const EventDetails = () => {
   };
 
   const [reviewText, setReviewText] = useState("");
-  const [rating, setRating] = useState(5); // Default to 5 stars
+  const [rating, setRating] = useState(5);
 
   const user = useMemo(() => JSON.parse(localStorage.getItem("user")), []);
   const isAdmin = user?.role === "admin";
@@ -110,16 +110,18 @@ const EventDetails = () => {
 
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white shadow-lg rounded-2xl">
-      {/* Banner Image */}
       <div className="overflow-hidden rounded-2xl shadow-xl mb-6">
         <img
           src={event.banner_image_url || defaultImage}
           alt={event.title}
-          className="w-full h-96 object-cover transform hover:scale-105 transition duration-500 ease-in-out"
+          className="w-full h-72 object-cover rounded-xl mb-6"
+          onError={(e) => {
+            e.target.onerror = null; 
+            e.target.src = defaultImage;
+          }}
         />
       </div>
 
-      {/* Title and Category */}
       <div className="flex justify-between items-center mb-2">
         <h1 className="text-3xl font-bold">{event.title}</h1>
         {event.category && (
@@ -129,19 +131,16 @@ const EventDetails = () => {
         )}
       </div>
 
-      {/* Date and Time */}
       <p className="text-gray-600 mb-2">
         📅 {new Date(event.date).toLocaleDateString()}{" "}
         {event.start_time && `⏰ ${event.start_time.slice(0, 5)}`}{" "}
         {event.end_time && ` - ${event.end_time.slice(0, 5)}`}
       </p>
 
-      {/* Location */}
       <p className="mb-2">
         📍 {event.is_online ? "Online Event" : event.location}
       </p>
 
-      {/* Meeting Link (if online) */}
       {event.is_online && event.meeting_link && (
         <p className="mb-2">
           🔗{" "}
@@ -156,7 +155,6 @@ const EventDetails = () => {
         </p>
       )}
 
-      {/* Organizer */}
       {event.organizer_name && (
         <p className="mb-2">
           🎤 Hosted by:{" "}
@@ -172,18 +170,15 @@ const EventDetails = () => {
         </p>
       )}
 
-      {/* Description */}
       <div className="mt-4">
         <p className="text-gray-700">{event.description}</p>
       </div>
 
-      {/* Capacity and Price */}
       <div className="flex justify-between items-center mt-6">
         <p>👥 Capacity: {event.capacity || "Not specified"}</p>
         <p>💰 {event.price === 0 ? "Free" : `₹${event.price}`}</p>
       </div>
 
-      {/* Tags */}
       {event.tags && (
         <div className="mt-4 flex flex-wrap gap-2">
           {event.tags.split(",").map((tag) => (
@@ -196,7 +191,6 @@ const EventDetails = () => {
           ))}
         </div>
       )}
-      {/* Seats Left Section */}
       <div className="mt-4 text-lg font-medium">
         {seatsLeft > 0 ? (
           <p>🎫 Seats Left: {seatsLeft}</p>
@@ -228,7 +222,6 @@ const EventDetails = () => {
         </div>
       )}
 
-      {/* Book or Cancel or Edit Button */}
       <div className="mt-6 text-center">
         {eventEnded() ? (
           <p className="text-gray-600 italic text-lg font-semibold">
