@@ -58,6 +58,11 @@
 
 👉 **[Click Here to Explore the App](https://event-bookin.netlify.app/)**
 
+Login as admin to use it at full potential - 
+```bash
+username : admin1@gmail.com
+password: 1234
+```
 ---
 
 ## 📦 Installation
