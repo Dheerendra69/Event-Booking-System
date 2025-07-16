@@ -69,171 +69,173 @@ const CreateEvent = () => {
   );
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-3xl mx-auto p-6 space-y-4 bg-white rounded-xl shadow"
-    >
-      <h2 className="text-2xl font-bold mb-4">Create New Event</h2>
-
-      <div>
-        <Label name="Title" required />
-        <input
-          name="title"
-          type="text"
-          value={formData.title}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        />
-      </div>
-
-      <div>
-        <Label name="Description" required />
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          required
-          className="w-full h-32 p-2 border border-gray-300 rounded-lg resize-y"
-        />
-      </div>
-
-      <div>
-        <Label name="Location" required />
-        <input
-          name="location"
-          type="text"
-          value={formData.location}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        />
-      </div>
-
-      <div>
-        <Label name="Venue Details" required />
-        <input
-          name="venue_details"
-          type="text"
-          value={formData.venue_details}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        />
-      </div>
-
-      {[
-        "organizer_name",
-        "organizer_email",
-        "category",
-        "tags",
-        "banner_image_url",
-        "thumbnail_url",
-        "meeting_link",
-      ].map((field) => (
-        <div key={field}>
-          <Label name={field.replaceAll("_", " ")} />
-          <input
-            name={field}
-            type="text"
-            value={formData[field]}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-lg"
-          />
-        </div>
-      ))}
-
-      <div className="flex gap-4">
-        <div className="w-full">
-          <Label name="Date" required />
-          <input
-            name="date"
-            type="date"
-            value={formData.date}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border border-gray-300 rounded-lg"
-          />
-        </div>
-        <div className="w-full">
-          <Label name="Start Time" />
-          <input
-            name="start_time"
-            type="time"
-            value={formData.start_time}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-lg"
-          />
-        </div>
-        <div className="w-full">
-          <Label name="End Time" />
-          <input
-            name="end_time"
-            type="time"
-            value={formData.end_time}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-lg"
-          />
-        </div>
-      </div>
-
-      <div className="flex gap-4">
-        <div className="w-full">
-          <Label name="Capacity" required />
-          <input
-            name="capacity"
-            type="number"
-            value={formData.capacity}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border border-gray-300 rounded-lg"
-          />
-        </div>
-        <div className="w-full">
-          <Label name="Price" />
-          <input
-            name="price"
-            type="number"
-            value={formData.price}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-lg"
-          />
-        </div>
-      </div>
-
-      <div className="flex items-center space-x-2">
-        <input
-          name="is_online"
-          type="checkbox"
-          checked={formData.is_online}
-          onChange={handleChange}
-        />
-        <label htmlFor="is_online" className="text-sm">
-          Is this an online event?
-        </label>
-      </div>
-
-      <div>
-        <Label name="Status" />
-        <select
-          name="status"
-          value={formData.status}
-          onChange={handleChange}
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        >
-          <option value="upcoming">Upcoming</option>
-          <option value="ongoing">Ongoing</option>
-          <option value="completed">Completed</option>
-        </select>
-      </div>
-
-      <button
-        type="submit"
-        className="bg-blue-600 text-white px-6 py-2 rounded-lg"
+    <div className="px-4 sm:px-6 lg:px-8 py-6">
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-3xl mx-auto p-4 sm:p-6 space-y-4 bg-white rounded-xl shadow"
       >
-        Create Event
-      </button>
-    </form>
+        <h2 className="text-2xl font-bold mb-4">Create New Event</h2>
+
+        <div>
+          <Label name="Title" required />
+          <input
+            name="title"
+            type="text"
+            value={formData.title}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+
+        <div>
+          <Label name="Description" required />
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+            className="w-full h-32 p-2 border border-gray-300 rounded-lg resize-y"
+          />
+        </div>
+
+        <div>
+          <Label name="Location" required />
+          <input
+            name="location"
+            type="text"
+            value={formData.location}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+
+        <div>
+          <Label name="Venue Details" required />
+          <input
+            name="venue_details"
+            type="text"
+            value={formData.venue_details}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+
+        {[
+          "organizer_name",
+          "organizer_email",
+          "category",
+          "tags",
+          "banner_image_url",
+          "thumbnail_url",
+          "meeting_link",
+        ].map((field) => (
+          <div key={field}>
+            <Label name={field.replaceAll("_", " ")} />
+            <input
+              name={field}
+              type="text"
+              value={formData[field]}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+        ))}
+
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="w-full">
+            <Label name="Date" required />
+            <input
+              name="date"
+              type="date"
+              value={formData.date}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+          <div className="w-full">
+            <Label name="Start Time" />
+            <input
+              name="start_time"
+              type="time"
+              value={formData.start_time}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+          <div className="w-full">
+            <Label name="End Time" />
+            <input
+              name="end_time"
+              type="time"
+              value={formData.end_time}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="w-full">
+            <Label name="Capacity" required />
+            <input
+              name="capacity"
+              type="number"
+              value={formData.capacity}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+          <div className="w-full">
+            <Label name="Price" />
+            <input
+              name="price"
+              type="number"
+              value={formData.price}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <input
+            name="is_online"
+            type="checkbox"
+            checked={formData.is_online}
+            onChange={handleChange}
+          />
+          <label htmlFor="is_online" className="text-sm">
+            Is this an online event?
+          </label>
+        </div>
+
+        <div>
+          <Label name="Status" />
+          <select
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          >
+            <option value="upcoming">Upcoming</option>
+            <option value="ongoing">Ongoing</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-6 py-2 rounded-lg"
+        >
+          Create Event
+        </button>
+      </form>
+    </div>
   );
 };
 

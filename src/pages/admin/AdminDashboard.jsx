@@ -2,8 +2,8 @@ import { NavLink, Outlet } from "react-router-dom";
 
 const AdminDashboard = () => {
   return (
-    <div className="flex h-screen">
-      <aside className="w-60 bg-gray-100 border-r p-4 space-y-4">
+    <div className="flex flex-col md:flex-row h-screen">
+      <aside className="w-full md:w-60 bg-gray-100 border-b md:border-b-0 md:border-r p-4 space-y-4">
         <h2 className="text-xl font-bold mb-4">Admin Panel</h2>
         <NavLink
           to="/admin/allbookings"
@@ -55,8 +55,8 @@ const AdminDashboard = () => {
         </NavLink>
       </aside>
 
-      <main className="flex-1 p-6 overflow-y-auto">
-        <Outlet /> 
+      <main className="flex-1 p-4 md:p-6 overflow-y-auto">
+        <Outlet />
       </main>
     </div>
   );
