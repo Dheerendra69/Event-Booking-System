@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# 🎟️ Event Booking System
+Event Booking System is a full-stack web application that allows users to browse, book, and manage event reservations. Built using the MERN stack with MySQL as the database, the platform provides secure login functionality and real-time seat availability.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 🔐 Hero Page
+![Hero Page](./website-demo/Hero-Page.jpeg)
+---
+---
+🚀 Features
+User signup and login with JWT authentication
+View a list of upcoming events with event details (name, location, date, total seats, available seats)
+Book events based on the number of seats available
+Realtime update of available seats after successful booking
+Displays confirmation message upon successful booking
 
-## Available Scripts
+Alerts if:
+User is not logged in
+Number of seats requested exceeds availability
+Simple and intuitive frontend using React.js
+Backend API built with Node.js and Express.js
+Relational data handling with MySQL
 
-In the project directory, you can run:
+🛠️ Tech Stack
+Frontend: React.js, HTML, CSS, JavaScript
+Backend: Node.js, Express.js
+Database: MySQL (via Sequelize / mysql2)
+Authentication: JWT-based
+Hosting:
+Frontend: Netlify
+Backend: (e.g., Render / Railway / Vercel API – mention if hosted)
 
-### `npm start`
+📍 How It Works
+User signs up / logs in
+Fetches list of all upcoming events
+Each event shows number of seats left
+On booking:
+Available seats are updated
+Booking is saved with event ID and user details
+Backend validates:
+Login status
+Seat availability
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+🖥️ Live Demo
+[👉 Click Here to Explore the App](https://event-bookin.netlify.app/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
