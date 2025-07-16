@@ -59,3 +59,39 @@
 👉 **[Click Here to Explore the App](https://event-bookin.netlify.app/)**
 
 ---
+---
+
+## 📦 Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/event-booking-system.git
+cd event-booking-system
+npm install
+npm start
+
+<!-- 2. Set Up the Backend -->
+
+<!-- Navigate to the backend folder: -->
+cd server
+
+<!-- Install dependencies: -->
+npm install
+
+<!-- Create a .env file with the following: -->
+PORT=4000
+JWT_SECRET=YOUR_JWT_SECRET
+DB_HOST=YOUR_HOSTNAME
+DB_PORT=YOUR_DATABASE_PORT
+DB_USER=YOUR_DATABASE_USER
+DB_PASSWORD=YOUR_DATABASE_PASSWORD
+DB_NAME=YOUR_DATABASE_NAME
+
+<!-- import the event_booking_schema into your database -->
+mysql -u root -p YOUR_DATABASE_NAME < event_booking_schema.sql
+
+<!-- Start the backend server: -->
+npm start
+
+```
