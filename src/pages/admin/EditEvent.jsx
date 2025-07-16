@@ -26,7 +26,7 @@ const EditEvent = () => {
     try {
       await API.put(`/events/${id}`, formData);
       alert("Event updated successfully");
-      navigate("/admin/all-bookings");
+      navigate("/admin/allbookings");
     } catch {
       alert("Error updating event");
     }

@@ -1,33 +1,74 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { fetchEventById, bookEvent } from "../api/eventAPI";
+import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  fetchEventById,
+  bookEvent,
+  checkBooking,
+  cancelBooking,
+  getAvailableSeats,
+} from "../api/eventAPI";
 import Loader from "../components/Loader";
 
 const EventDetails = () => {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
-  const user = JSON.parse(localStorage.getItem("user"));
+  const [isBooked, setIsBooked] = useState(false);
+  const [seatsLeft, setSeatsLeft] = useState(null);
+  const [canBook, setCanBook] = useState(true);
+  const [numberOfPeople, setNumberOfPeople] = useState(1);
+
+  const user = useMemo(() => JSON.parse(localStorage.getItem("user")), []);
   const isAdmin = user?.role === "admin";
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchEventById(id).then((res) => {
-      setEvent(res.data);
-      setLoading(false);
-    });
-  }, [id]);
+    const fetchData = async () => {
+      try {
+        const res = await fetchEventById(id);
+        setEvent(res.data);
+        const seatRes = await getAvailableSeats(res.data.id);
+        setSeatsLeft(seatRes.data.seatsLeft);
+        setCanBook(seatRes.data.isPossibleToBook);
+        if (user) {
+          const bookingStatus = await checkBooking(user.id, res.data.id);
+          setIsBooked(bookingStatus.data.isBooked);
+        }
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [id, user, isBooked]);
 
   const handleBook = async () => {
+    if (numberOfPeople > seatsLeft) {
+      alert(`Only ${seatsLeft} seats left!`);
+      return;
+    }
+
     try {
-      await bookEvent(event.id);
+      await bookEvent(event.id, numberOfPeople);
       alert("Booking successful!");
+      setIsBooked(true);
     } catch (err) {
       alert("You must be logged in to book.");
     }
   };
-  const handleEdit = async () => {
+
+  const handleCancelBooking = async () => {
+    try {
+      await cancelBooking(user.id, event.id);
+      alert("Booking cancelled.");
+      setIsBooked(false);
+    } catch (err) {
+      alert("Could not cancel booking.");
+    }
+  };
+
+  const handleEdit = () => {
     navigate(`/admin/editevent/${event.id}`);
   };
 
@@ -121,28 +162,76 @@ const EventDetails = () => {
           ))}
         </div>
       )}
+      {/* Seats Left Section */}
+      <div className="mt-4 text-lg font-medium">
+        {seatsLeft > 0 ? (
+          <p>🎫 Seats Left: {seatsLeft}</p>
+        ) : (
+          <p className="text-red-600 font-semibold">
+            ❌ Event is fully booked!
+          </p>
+        )}
+      </div>
+      {!isAdmin && !isBooked && canBook && (
+        <div className="mt-6 flex flex-col items-center gap-2">
+          <label htmlFor="people" className="font-medium">
+            👥 Number of People
+          </label>
+          <input
+            id="people"
+            type="number"
+            min="1"
+            max={seatsLeft}
+            value={numberOfPeople}
+            onChange={(e) => setNumberOfPeople(Number(e.target.value))}
+            className="border border-gray-300 rounded-lg px-4 py-2 w-32 text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {numberOfPeople > seatsLeft && (
+            <p className="text-red-500 text-sm">
+              Only {seatsLeft} seats are available.
+            </p>
+          )}
+        </div>
+      )}
 
-      {/* Book Now Button */}
-
-      {isAdmin ? (
-        <div className="mt-6 text-center">
+      {/* Book or Cancel or Edit Button */}
+      {/* Action Button */}
+      <div className="mt-6 text-center">
+        {isAdmin ? (
           <button
             onClick={handleEdit}
             className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold"
           >
             Edit Event
           </button>
-        </div>
-      ) : (
-        <div className="mt-6 text-center">
+        ) : isBooked ? (
+          <button
+            onClick={handleCancelBooking}
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-semibold"
+          >
+            Cancel Booking
+          </button>
+        ) : canBook ? (
           <button
             onClick={handleBook}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold"
+            disabled={numberOfPeople < 1 || numberOfPeople > seatsLeft}
+            className={`${
+              numberOfPeople < 1 || numberOfPeople > seatsLeft
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            } text-white px-6 py-2 rounded-lg font-semibold`}
           >
             Book Now
           </button>
-        </div>
-      )}
+        ) : (
+          <button
+            disabled
+            className="bg-gray-400 text-white px-6 py-2 rounded-lg font-semibold cursor-not-allowed"
+          >
+            Event Full
+          </button>
+        )}
+      </div>
     </div>
   );
 };

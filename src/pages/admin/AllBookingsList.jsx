@@ -19,7 +19,7 @@ const AllBookingsList = () => {
   if (!bookings.length) {
     return <p className="text-center text-gray-500">No bookings found.</p>;
   }
-  console.log("bookings");
+  console.log("events");
   console.log(bookings);
 
   const handleClick = async (eventId) => {
@@ -32,7 +32,7 @@ const AllBookingsList = () => {
       <ul className="space-y-3">
         {bookings.map((b) => (
           <li
-            onClick={() => handleClick(b.booking_id)}
+            onClick={() => handleClick(b.eventID)}
             key={b.booking_id}
             className="bg-white p-4 rounded-lg shadow cursor-pointer hover:bg-gray-100 transition"
           >

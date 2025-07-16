@@ -16,7 +16,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:3001",
-      "https://event-bookin.netlify.app/",
+      "https://your-frontend-domain.com",
     ],
   })
 );
