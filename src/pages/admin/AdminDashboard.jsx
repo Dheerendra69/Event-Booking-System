@@ -2,7 +2,7 @@ import { NavLink, Outlet } from "react-router-dom";
 
 const AdminDashboard = () => {
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen">
       <aside className="w-full md:w-60 bg-gray-100 border-b md:border-b-0 md:border-r p-4 space-y-4">
         <h2 className="text-xl font-bold mb-4">Admin Panel</h2>
         <NavLink

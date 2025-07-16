@@ -18,7 +18,7 @@ const CreateEvent = () => {
     organizer_name: "",
     organizer_email: "",
     category: "",
-    price: 0,
+    price: "",
     tags: "",
     status: "upcoming",
   });
