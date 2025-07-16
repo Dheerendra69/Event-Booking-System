@@ -48,11 +48,24 @@ const CreateEvent = () => {
       className="max-w-3xl mx-auto p-6 space-y-4 bg-white rounded-xl shadow"
     >
       <h2 className="text-2xl font-bold mb-4">Create New Event</h2>
-
-      {/* Text Inputs */}
+      <input
+        key="title"
+        name="title"
+        type="text"
+        placeholder={"title".replaceAll("_", " ")}
+        value={formData["title"]}
+        onChange={handleChange}
+        className="w-full p-2 border border-gray-300 rounded-lg"
+      />
+      {/* Description Textarea */}
+      <textarea
+        name="description"
+        placeholder="Description"
+        value={formData.description}
+        onChange={handleChange}
+        className="w-full h-32 p-2 border border-gray-300 rounded-lg resize-y"
+      />
       {[
-        "title",
-        "description",
         "location",
         "venue_details",
         "organizer_name",
@@ -74,7 +87,6 @@ const CreateEvent = () => {
         />
       ))}
 
-      {/* Date and Time */}
       <div className="flex gap-4">
         <input
           name="date"
@@ -99,7 +111,6 @@ const CreateEvent = () => {
         />
       </div>
 
-      {/* Capacity and Price */}
       <div className="flex gap-4">
         <input
           name="capacity"

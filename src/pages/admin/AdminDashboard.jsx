@@ -1,8 +1,5 @@
-import React from "react";
-import { NavLink, Routes, Route } from "react-router-dom";
-import AllBookingsList from "./AllBookingsList";
-import CreateEvent from "./CreateEvent";
-import CreateUser from "./CreateUser";
+import { NavLink, Outlet } from "react-router-dom";
+
 const AdminDashboard = () => {
   return (
     <div className="flex h-screen">
@@ -45,15 +42,23 @@ const AdminDashboard = () => {
         >
           👤 Create User
         </NavLink>
+        <NavLink
+          to="/admin/allevents"
+          className={({ isActive }) =>
+            `block px-3 py-2 rounded ${
+              isActive
+                ? "bg-blue-600 text-white"
+                : "text-gray-800 hover:bg-gray-200"
+            }`
+          }
+        >
+          📝 All Events
+        </NavLink>
       </aside>
 
-      {/* Main content */}
+      {/* Main Content */}
       <main className="flex-1 p-6 overflow-y-auto">
-        <Routes>
-          <Route path="all-bookings" element={<AllBookingsList />} />
-          <Route path="create-event" element={<CreateEvent />} />
-          <Route path="create-user" element={<CreateUser />} />
-        </Routes>
+        <Outlet /> 
       </main>
     </div>
   );

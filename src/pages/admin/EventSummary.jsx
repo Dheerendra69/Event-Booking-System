@@ -1,0 +1,115 @@
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import API, { fetchEventById, fetchReviews } from "../../api/eventAPI";
+import Loader from "../../components/Loader";
+
+const EventSummary = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [attendeesCount, setAttendeesCount] = useState(0);
+  const [reviews, setReviews] = useState([]);
+
+  const eventEnded = () => {
+    if (!event?.date) return false;
+    console.log(event);
+    const endDateTime = new Date(`${event.date}`);
+    return new Date() > endDateTime;
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetchEventById(id);
+        setEvent(res.data);
+
+        // Fetch total number of people attended
+        const bookingsRes = await API.get(`/events/${id}/attendees-count`);
+        setAttendeesCount(bookingsRes.data.totalAttendees);
+
+        // Fetch reviews only if event has ended
+        if (new Date() > new Date(`${res.data.date}`)) {
+          const reviewRes = await fetchReviews(id);
+          setReviews(reviewRes.data);
+        }
+
+        setLoading(false);
+      } catch (err) {
+        console.error("Error loading event summary:", err);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  if (loading || !event) return <Loader />;
+
+  return (
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md">
+      <h1 className="text-3xl font-bold mb-4">📊 Event Summary (Admin)</h1>
+
+      {/* Basic Info */}
+      <h2 className="text-2xl font-semibold mb-2">{event.title}</h2>
+      <p className="text-gray-600 mb-2">
+        📅 {new Date(event.date).toLocaleDateString()}{" "}
+        {event.start_time &&
+          `⏰ ${event.start_time.slice(0, 5)} - ${event.end_time.slice(0, 5)}`}
+      </p>
+      <p className="mb-2">
+        📍 {event.is_online ? "Online Event" : event.location}
+      </p>
+      {event.organizer_name && <p>🎤 Organizer: {event.organizer_name}</p>}
+      <p>👥 Capacity: {event.capacity}</p>
+      <p>💰 Price: {event.price === 0 ? "Free" : `₹${event.price}`}</p>
+
+      {/* Attendance */}
+      <div className="mt-6 border-t pt-4">
+        <h3 className="text-xl font-semibold mb-2">✅ Attendance</h3>
+        <p>
+          <span className="font-bold">{attendeesCount}</span> people attended
+          this event.
+        </p>
+      </div>
+
+      {/* Reviews */}
+      {eventEnded() && (
+        <div className="mt-6 border-t pt-4">
+          <h3 className="text-xl font-semibold mb-2">🌟 Reviews</h3>
+          {reviews.length === 0 ? (
+            <p className="text-gray-500 italic">No reviews available yet.</p>
+          ) : (
+            <div className="space-y-4">
+              {reviews.map((review, index) => (
+                <div
+                  key={index}
+                  className="border rounded p-4 bg-gray-50 shadow-sm"
+                >
+                  <div className="flex justify-between mb-1">
+                    <p className="font-semibold">{review.user_name}</p>
+                    <p className="text-yellow-600">{review.rating} ⭐</p>
+                  </div>
+                  <p className="text-gray-700">{review.comment}</p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {new Date(review.created_at).toLocaleString()}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      <div className="flex justify-center items-start mb-4 mt-4">
+        <button
+          onClick={() => navigate(`/admin/editevent/${event.id}`)}
+          className="text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+        >
+          ✏️ Edit Event
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default EventSummary;

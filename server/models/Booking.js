@@ -28,11 +28,16 @@ const getBookingsByUser = (user_id, callback) => {
 
 const getAllBookings = (callback) => {
   const query = `
-        SELECT b.id AS booking_id, u.name AS user_name, e.title AS event_title, e.date, b.event_id AS eventID
-        FROM bookings b
-        JOIN users u ON b.user_id = u.id
-        JOIN events e ON b.event_id = e.id
-        ORDER BY e.date DESC
+           SELECT 
+      bookings.id AS booking_id,
+      users.name AS user_name,
+      events.title AS event_title,
+      events.location AS event_location,
+      bookings.created_at AS date
+    FROM bookings
+    JOIN users ON bookings.user_id = users.id
+    JOIN events ON bookings.event_id = events.id
+    ORDER BY bookings.created_at DESC
     `;
   db.query(query, callback);
 };

@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllBookings } from "../../api/eventAPI";
-import Loader from "../../components/Loader";
+import { useNavigate } from "react-router-dom";
+import { fetchEvents } from "../../api/eventAPI";
 
-const AllBookingsList = () => {
-  const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true);
+const AllEventsList = () => {
+  const [events, setEvents] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const [filterDate, setFilterDate] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchAllBookings().then((res) => {
-      setBookings(res.data);
-      setLoading(false);
-    });
+    const fetchData = async () => {
+      try {
+        const res = await fetchEvents();
+        setEvents(res.data);
+      } catch (err) {
+        console.error("Failed to fetch events:", err);
+      }
+    };
+    fetchData();
   }, []);
 
-  const filteredBookings = bookings.filter((b) => {
+  const filteredEvents = events.filter((event) => {
+    const title = event.title?.toLowerCase() || "";
+    const location = event.location?.toLowerCase() || "";
     const keywords = searchQuery.toLowerCase().split(" ").filter(Boolean);
-    const title = b.event_title.toLowerCase();
-    const location = b.event_location?.toLowerCase() || "";
 
     const matchesKeywords = keywords.length
       ? keywords.some((word) => title.includes(word))
@@ -29,17 +34,15 @@ const AllBookingsList = () => {
       ? location.includes(locationFilter.toLowerCase())
       : true;
 
-    const eventDateOnly = new Date(b.date).toISOString().split("T")[0];
-    const matchesDate = filterDate ? eventDateOnly === filterDate : true;
+    const eventDate = new Date(event.date).toISOString().split("T")[0];
+    const matchesDate = filterDate ? eventDate === filterDate : true;
 
     return matchesKeywords && matchesLocation && matchesDate;
   });
 
-  if (loading) return <Loader />;
-
   return (
     <div className="p-6">
-      <h1 className="text-xl font-bold mb-6">📋 All Bookings</h1>
+      <h2 className="text-2xl font-bold mb-6">📝 All Events</h2>
 
       {/* Filters */}
       <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -65,29 +68,21 @@ const AllBookingsList = () => {
         />
       </div>
 
-      {/* Results */}
+      {/* Event List */}
       <ul className="space-y-3">
-        {filteredBookings.length === 0 ? (
-          <p className="text-center text-gray-500">
-            No matching bookings found.
-          </p>
+        {filteredEvents.length === 0 ? (
+          <p className="text-center text-gray-500">No matching events found.</p>
         ) : (
-          filteredBookings.map((b) => (
+          filteredEvents.map((event) => (
             <li
-              key={b.booking_id}
-              className="bg-white p-4 rounded-lg shadow cursor-pointer hover:bg-gray-100 transition"
+              key={event.id}
+              onClick={() => navigate(`/admin/eventsummary/${event.id}`)}
+              className="cursor-pointer p-4 border rounded-lg shadow hover:bg-gray-100 transition"
             >
-              <p>
-                <strong>User:</strong> {b.user_name}
-              </p>
-              <p>
-                <strong>Event:</strong> {b.event_title}
-              </p>
-              <p>
-                <strong>Location:</strong> {b.event_location}
-              </p>
-              <p>
-                <strong>Date:</strong> {new Date(b.date).toLocaleDateString()}
+              <h3 className="text-lg font-semibold">{event.title}</h3>
+              <p className="text-sm text-gray-600">
+                📅 {new Date(event.date).toLocaleDateString()} | 📍{" "}
+                {event.location || "N/A"}
               </p>
             </li>
           ))
@@ -97,4 +92,4 @@ const AllBookingsList = () => {
   );
 };
 
-export default AllBookingsList;
+export default AllEventsList;

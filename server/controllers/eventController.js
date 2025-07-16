@@ -89,9 +89,23 @@ const updateEvent = (req, res) => {
   });
 };
 
+const getAttendeesCount = (req, res) => {
+  const eventId = req.params.id;
+  const query = `
+    SELECT COALESCE(SUM(number_of_people), 0) AS totalAttendees
+    FROM bookings
+    WHERE event_id = ?
+  `;
+  db.query(query, [eventId], (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(results[0]);
+  });
+};
+
 module.exports = {
   createEvent,
   getEvents,
   getEvent,
   updateEvent,
+  getAttendeesCount,
 };

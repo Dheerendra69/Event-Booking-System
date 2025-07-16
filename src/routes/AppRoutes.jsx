@@ -14,6 +14,8 @@ import AdminRoute from "./AdminRoutes";
 import UserRoutes from "./UserRoutes";
 import AllBookingsList from "../pages/admin/AllBookingsList";
 import EditEvent from "../pages/admin/EditEvent";
+import AllEventsList from "../pages/admin/AllEventsList";
+import EventSummary from "../pages/admin/EventSummary";
 
 const AppRoutes = () => {
   return (
@@ -48,11 +50,15 @@ const AppRoutes = () => {
         }
       />
       <Route element={<AdminRoute />}>
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/createuser" element={<CreateUser />} />
-        <Route path="/admin/allbookings" element={<AllBookingsList />} />
-        <Route path="/admin/createevent" element={<CreateEvent />} />
-        <Route path="/admin/editevent/:id" element={<EditEvent />} />
+        <Route path="/admin" element={<AdminDashboard />}>
+          <Route path="allbookings" element={<AllBookingsList />} />
+          <Route path="createevent" element={<CreateEvent />} />
+          <Route path="createuser" element={<CreateUser />} />
+          <Route path="allevents" element={<AllEventsList />} />
+          <Route path="editevent/:id" element={<EditEvent />} />
+          <Route path="eventsummary/:id" element={<EventSummary />} />
+          <Route index element={<AllBookingsList />} />
+        </Route>
       </Route>
     </Routes>
   );

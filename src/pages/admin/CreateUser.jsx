@@ -12,7 +12,7 @@ const CreateUser = () => {
     name: "",
     email: "",
     password: "",
-    role: "organiser",
+    role: "admin",
   });
 
   const [message, setMessage] = useState("");
@@ -78,7 +78,6 @@ const CreateUser = () => {
           onChange={handleChange}
           className="w-full border p-2 rounded"
         >
-          <option value="organiser">Organiser</option>
           <option value="admin">Admin</option>
         </select>
         <button

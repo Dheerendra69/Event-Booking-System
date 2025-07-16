@@ -1,11 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
+import defaultImage from "../images/default-url.jpg";
+
+import API, {
   fetchEventById,
   bookEvent,
   checkBooking,
   cancelBooking,
   getAvailableSeats,
+  fetchReviews,
 } from "../api/eventAPI";
 import Loader from "../components/Loader";
 
@@ -17,6 +20,17 @@ const EventDetails = () => {
   const [seatsLeft, setSeatsLeft] = useState(null);
   const [canBook, setCanBook] = useState(true);
   const [numberOfPeople, setNumberOfPeople] = useState(1);
+  const [reviews, setReviews] = useState([]);
+  console.log(event);
+  const eventEnded = () => {
+    if (!event?.date) return false;
+    const endDateTime = new Date(`${event.date}`);
+
+    return new Date() > endDateTime;
+  };
+
+  const [reviewText, setReviewText] = useState("");
+  const [rating, setRating] = useState(5); // Default to 5 stars
 
   const user = useMemo(() => JSON.parse(localStorage.getItem("user")), []);
   const isAdmin = user?.role === "admin";
@@ -33,6 +47,11 @@ const EventDetails = () => {
         if (user) {
           const bookingStatus = await checkBooking(user.id, res.data.id);
           setIsBooked(bookingStatus.data.isBooked);
+        }
+        if (new Date() > new Date(`${res.data.date}`)) {
+          const reviewRes = await fetchReviews(res.data.id);
+
+          setReviews(reviewRes.data);
         }
         setLoading(false);
       } catch (err) {
@@ -71,19 +90,34 @@ const EventDetails = () => {
   const handleEdit = () => {
     navigate(`/admin/editevent/${event.id}`);
   };
+  const handleSubmitReview = async () => {
+    try {
+      await API.post("/reviews/publishreview", {
+        event_id: event.id,
+        rating,
+        comment: reviewText,
+      });
+      alert("Thank you for your review!");
+      setReviewText("");
+      setRating(5);
+    } catch (err) {
+      console.error("Error submitting review:", err);
+      alert("Failed to submit review. Try again.");
+    }
+  };
 
   if (loading || !event) return <Loader />;
 
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white shadow-lg rounded-2xl">
       {/* Banner Image */}
-      {event.banner_image_url && (
+      <div className="overflow-hidden rounded-2xl shadow-xl mb-6">
         <img
-          src={event.banner_image_url}
+          src={event.banner_image_url || defaultImage}
           alt={event.title}
-          className="w-full h-64 object-cover rounded-xl mb-6"
+          className="w-full h-96 object-cover transform hover:scale-105 transition duration-500 ease-in-out"
         />
-      )}
+      </div>
 
       {/* Title and Category */}
       <div className="flex justify-between items-center mb-2">
@@ -195,9 +229,12 @@ const EventDetails = () => {
       )}
 
       {/* Book or Cancel or Edit Button */}
-      {/* Action Button */}
       <div className="mt-6 text-center">
-        {isAdmin ? (
+        {eventEnded() ? (
+          <p className="text-gray-600 italic text-lg font-semibold">
+            📅 This event has already happened.
+          </p>
+        ) : isAdmin ? (
           <button
             onClick={handleEdit}
             className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold"
@@ -232,6 +269,61 @@ const EventDetails = () => {
           </button>
         )}
       </div>
+
+      {eventEnded() && isBooked && (
+        <div className="mt-8 border-t pt-4">
+          <h2 className="text-xl font-semibold mb-2">Leave a Review</h2>
+          <textarea
+            className="w-full border rounded p-2"
+            placeholder="Write your review here..."
+            value={reviewText}
+            onChange={(e) => setReviewText(e.target.value)}
+          />
+          <div className="flex items-center space-x-2 mt-2">
+            <label>Rating:</label>
+            <select value={rating} onChange={(e) => setRating(e.target.value)}>
+              {[1, 2, 3, 4, 5].map((r) => (
+                <option key={r} value={r}>
+                  {r} ⭐
+                </option>
+              ))}
+            </select>
+          </div>
+          <button
+            onClick={handleSubmitReview}
+            className="mt-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+          >
+            Submit Review
+          </button>
+        </div>
+      )}
+      {eventEnded() && (
+        <div className="mt-10 border-t pt-6">
+          <h2 className="text-xl font-semibold mb-4">🌟 Reviews</h2>
+
+          {reviews.length === 0 ? (
+            <p className="text-gray-500 italic">No reviews yet.</p>
+          ) : (
+            <div className="space-y-4">
+              {reviews.map((review, index) => (
+                <div
+                  key={index}
+                  className="border rounded p-4 shadow-sm bg-gray-50"
+                >
+                  <div className="flex justify-between items-center mb-1">
+                    <p className="font-semibold">{review.user_name}</p>
+                    <p className="text-yellow-600">{review.rating} ⭐</p>
+                  </div>
+                  <p className="text-gray-700">{review.comment}</p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {new Date(review.created_at).toLocaleString()}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
