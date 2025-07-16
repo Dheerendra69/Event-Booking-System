@@ -61,7 +61,7 @@
 Login as admin to use it at full potential - 
 ```bash
 username : admin1@gmail.com
-password: 1234
+password : 1234
 ```
 ---
 
