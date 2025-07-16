@@ -20,7 +20,6 @@
 
 - User is not logged in  
 - Number of seats requested exceeds availability  
-
 - Simple and intuitive frontend using **React.js**  
 - Backend API built with **Node.js** and **Express.js**  
 - Relational data handling with **MySQL**  
@@ -36,21 +35,50 @@
 
 **Hosting**:  
 - **Frontend**: Netlify  
-- **Backend**: (e.g., Render / Railway / Vercel API – mention if hosted)  
+- **Backend**: Render
+
+---
+# 📍 How It Works
+
+## 👤 User Capabilities
+
+- 📝 Register an account  
+- 🔐 Login to the platform  
+- 📅 View a list of all upcoming events  
+- 🎟️ Book an event for:
+  - Themselves
+  - A group (specify number of people)
+- ❌ Cancel their booking  
+- 💬 Submit reviews and comments — *only allowed if the user attended the event and the event has ended*  
 
 ---
 
-## 📍 How It Works
+## 🛠️ Admin Capabilities
 
-1. User signs up / logs in  
-2. Fetches list of all upcoming events  
-3. Each event shows number of seats left  
-4. On booking:  
-   - Available seats are updated  
-   - Booking is saved with event ID and user details  
-5. Backend validates:  
-   - Login status  
-   - Seat availability  
+- 👤 Create new admin users  
+- 📊 Access and manage the Admin Dashboard  
+- 🗓️ Create new events  
+- 📋 View all bookings  
+- 📝 View all events  
+- ✏️ Edit or update existing event details  
+
+---
+
+## 🔁 Booking Flow
+
+1. **User logs in or signs up**  
+2. **Upcoming events are fetched and displayed**  
+3. **Each event displays available seats**  
+4. **User books an event** → selects number of people  
+5. **Backend validates**:
+   - ✅ Login/authentication status  
+   - ✅ Seat availability for the event  
+6. **Booking is confirmed**:
+   - Remaining seats are updated  
+   - Booking is saved with user and event info  
+7. **After event completion**, user can:
+   - Submit a **review**
+   - Write **comments**
 
 ---
 
