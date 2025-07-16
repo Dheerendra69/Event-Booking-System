@@ -59,7 +59,6 @@
 👉 **[Click Here to Explore the App](https://event-bookin.netlify.app/)**
 
 ---
----
 
 ## 📦 Installation
 
