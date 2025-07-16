@@ -58,7 +58,7 @@
 
 👉 **[Click Here to Explore the App](https://event-bookin.netlify.app/)** 
 
-👉 **[Click Here to Explore the App](https://event-booking-system-beta.vercel.app/))**
+👉 **[Click Here to Explore the App](https://event-booking-system-beta.vercel.app/)**
 
 Login as admin to use it at full potential - 
 ```bash
