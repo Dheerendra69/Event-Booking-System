@@ -18,7 +18,7 @@ const CreateEvent = () => {
     organizer_name: "",
     organizer_email: "",
     category: "",
-    price: "",
+    price: 0,
     tags: "",
     status: "upcoming",
   });
@@ -53,8 +53,20 @@ const CreateEvent = () => {
       return;
     }
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      alert("You are not logged in.");
+      return;
+    }
+
+    const dataToSend = {
+      ...formData,
+      created_by: user.id,
+    };
+
+
     try {
-      await API.post("/events", formData);
+      await API.post("/events", dataToSend);
       alert("Event created successfully");
     } catch (err) {
       console.error(err);

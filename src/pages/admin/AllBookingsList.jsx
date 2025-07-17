@@ -10,7 +10,10 @@ const AllBookingsList = () => {
   const [filterDate, setFilterDate] = useState("");
 
   useEffect(() => {
-    fetchAllBookings().then((res) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) return;
+
+    fetchAllBookings(user.id, user.role).then((res) => {
       setBookings(res.data);
       setLoading(false);
     });

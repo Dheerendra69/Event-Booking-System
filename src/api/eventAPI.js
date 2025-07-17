@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://event-booking-system-tqf3.onrender.com/api",
+  baseURL: "http://localhost:4000/api",
 });
 
 API.interceptors.request.use((config) => {
@@ -12,7 +12,9 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
-export const fetchEvents = () => API.get("/events");
+export const fetchEvents = (userId, role) =>
+  API.get(`/events?userId=${userId}&role=${role}`);
+
 export const fetchEventById = (id) => API.get(`/events/${id}`);
 export const bookEvent = (event_id, number_of_people = 1) =>
   API.post("/bookings", { event_id, number_of_people });
@@ -20,7 +22,9 @@ export const bookEvent = (event_id, number_of_people = 1) =>
 export const login = (credentials) => API.post("/users/login", credentials);
 export const register = (data) => API.post("/users/register", data);
 export const fetchMyBookings = () => API.get("/bookings/me");
-export const fetchAllBookings = () => API.get("/bookings/admin");
+export const fetchAllBookings = (userId, role) =>
+  API.get(`/bookings/admin?userId=${userId}&role=${role}`);
+
 export const checkBooking = (userId, eventId) =>
   API.get(`/bookings/check-booking/${userId}/${eventId}`);
 

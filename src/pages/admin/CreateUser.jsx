@@ -77,6 +77,7 @@ const CreateUser = () => {
           className="w-full border p-2 rounded"
         >
           <option value="admin">Admin</option>
+          <option value="organiser">Organiser</option>
         </select>
         <button
           type="submit"

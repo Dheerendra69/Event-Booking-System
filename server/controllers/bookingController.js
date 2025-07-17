@@ -26,7 +26,13 @@ const getMyBookings = (req, res) => {
 };
 
 const getAllBookings = (req, res) => {
-  bookingModel.getAllBookings((err, bookings) => {
+  const { userId, role } = req.query;
+
+  if (!userId) {
+    return res.status(400).json({ error: "Missing user ID" });
+  }
+
+  bookingModel.getAllBookings(userId, (err, bookings) => {
     if (err) return res.status(500).json({ error: err });
     res.json(bookings);
   });

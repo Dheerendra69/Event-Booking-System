@@ -21,6 +21,7 @@ const createEvent = (req, res) => {
     price,
     tags,
     status,
+    created_by,
   } = req.body;
 
   if (
@@ -54,8 +55,10 @@ const createEvent = (req, res) => {
       price,
       tags,
       status,
+      created_by,
     },
     (err, result) => {
+      console.log(err);
       if (err) return res.status(500).json({ error: err });
       res.status(201).json({
         message: "Event created successfully",
@@ -66,7 +69,8 @@ const createEvent = (req, res) => {
 };
 
 const getEvents = (req, res) => {
-  eventModel.getAllEvents((err, events) => {
+  const { userId, role } = req.query;
+  eventModel.getAllEvents(userId, role, (err, events) => {
     if (err) {
       console.log(err);
       return res.status(500).json({ error: err });

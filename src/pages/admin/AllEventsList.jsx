@@ -11,8 +11,10 @@ const AllEventsList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const user = JSON.parse(localStorage.getItem("user"));
       try {
-        const res = await fetchEvents();
+        const res = await fetchEvents(user.id, user.role);
+        
         setEvents(res.data);
       } catch (err) {
         console.error("Failed to fetch events:", err);
@@ -20,7 +22,6 @@ const AllEventsList = () => {
     };
     fetchData();
   }, []);
-
   const filteredEvents = events.filter((event) => {
     const title = event.title?.toLowerCase() || "";
     const location = event.location?.toLowerCase() || "";

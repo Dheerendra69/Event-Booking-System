@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../../api/eventAPI";
 
@@ -6,12 +6,27 @@ const EditEvent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState(null);
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const hasRun = useRef(false);
 
   useEffect(() => {
+    if (hasRun.current) return;
+
     API.get(`/events/${id}`)
-      .then((res) => setFormData(res.data))
-      .catch((err) => alert("Error loading event data" + err));
-  }, [id]);
+      .then((res) => {
+        if (res.data.created_by !== user.id) {
+          alert("You are not authorized to edit this event.");
+          navigate("/");
+        } else {
+          setFormData(res.data);
+        }
+      })
+      .catch((err) => alert("Error loading event data: " + err));
+
+    hasRun.current = true;
+  }, [id, navigate, user.id]);
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

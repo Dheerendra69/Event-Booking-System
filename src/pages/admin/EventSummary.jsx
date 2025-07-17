@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API, { fetchEventById, fetchReviews } from "../../api/eventAPI";
 import Loader from "../../components/Loader";
@@ -10,10 +10,11 @@ const EventSummary = () => {
   const [loading, setLoading] = useState(true);
   const [attendeesCount, setAttendeesCount] = useState(0);
   const [reviews, setReviews] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const alertShownRef = useRef(false);
 
   const eventEnded = () => {
     if (!event?.date) return false;
-    console.log(event);
     const endDateTime = new Date(`${event.date}`);
     return new Date() > endDateTime;
   };
@@ -42,7 +43,15 @@ const EventSummary = () => {
     fetchData();
   }, [id]);
 
-  if (loading || !event) return <Loader />;
+  useEffect(() => {
+    if (!loading && event && user?.id !== event.created_by) {
+      alertShownRef.current = true;
+      alert("You cannot view this page");
+      navigate("/");
+    }
+  }, [event, loading, user, navigate]);
+
+  if (loading || !event || user?.id !== event.created_by) return <Loader />;
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md">
@@ -95,6 +104,7 @@ const EventSummary = () => {
           )}
         </div>
       )}
+
       <div className="flex justify-center items-start mb-4 mt-4">
         <button
           onClick={() => navigate(`/admin/editevent/${event.id}`)}

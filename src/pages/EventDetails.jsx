@@ -21,7 +21,6 @@ const EventDetails = () => {
   const [canBook, setCanBook] = useState(true);
   const [numberOfPeople, setNumberOfPeople] = useState(1);
   const [reviews, setReviews] = useState([]);
-  console.log(event);
   const eventEnded = () => {
     if (!event?.date) return false;
     const endDateTime = new Date(`${event.date}`);
@@ -116,7 +115,7 @@ const EventDetails = () => {
           alt={event.title}
           className="w-full h-72 object-cover rounded-xl mb-6"
           onError={(e) => {
-            e.target.onerror = null; 
+            e.target.onerror = null;
             e.target.src = defaultImage;
           }}
         />
@@ -227,7 +226,7 @@ const EventDetails = () => {
           <p className="text-gray-600 italic text-lg font-semibold">
             📅 This event has already happened.
           </p>
-        ) : isAdmin ? (
+        ) : isAdmin && event.created_by && event.created_by === user.id ? (
           <button
             onClick={handleEdit}
             className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold"
@@ -241,7 +240,7 @@ const EventDetails = () => {
           >
             Cancel Booking
           </button>
-        ) : canBook ? (
+        ) : user.role !== "admin" && canBook ? (
           <button
             onClick={handleBook}
             disabled={numberOfPeople < 1 || numberOfPeople > seatsLeft}
@@ -253,14 +252,14 @@ const EventDetails = () => {
           >
             Book Now
           </button>
-        ) : (
+        ) : seatsLeft === 0 ? (
           <button
             disabled
             className="bg-gray-400 text-white px-6 py-2 rounded-lg font-semibold cursor-not-allowed"
           >
             Event Full
           </button>
-        )}
+        ) : null}
       </div>
 
       {eventEnded() && isBooked && (
