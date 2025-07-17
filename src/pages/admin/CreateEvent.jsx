@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import API from "../../api/eventAPI";
+import { useNavigate } from "react-router-dom";
 
 const CreateEvent = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -64,10 +66,10 @@ const CreateEvent = () => {
       created_by: user.id,
     };
 
-
     try {
       await API.post("/events", dataToSend);
       alert("Event created successfully");
+      navigate("/events");
     } catch (err) {
       console.error(err);
       alert("Error creating event");
