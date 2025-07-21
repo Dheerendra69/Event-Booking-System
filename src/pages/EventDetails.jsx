@@ -269,7 +269,7 @@ const EventDetails = () => {
         ) : null}
       </div>
 
-      {(isAdmin || event.created_by === user.id) && (
+      {(isAdmin && event.created_by === user.id) && (
         <div className="flex flex-wrap justify-center gap-4 mt-4">
           <button
             onClick={handleEdit}
