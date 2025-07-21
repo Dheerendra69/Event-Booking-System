@@ -5,6 +5,7 @@ const {
   createEvent,
   updateEvent,
   getAttendeesCount,
+  deleteEvent,
 } = require("../controllers/eventController");
 const { protect, isAdmin } = require("../middlewares/authMiddleware");
 
@@ -15,5 +16,6 @@ router.get("/:id", getEvent);
 router.put("/:id", updateEvent);
 router.post("/", protect, isAdmin, createEvent);
 router.get("/:id/attendees-count", protect, isAdmin, getAttendeesCount);
+router.delete("/delete-event/:id", deleteEvent);
 
 module.exports = router;

@@ -151,10 +151,32 @@ const getAttendeesCount = (req, res) => {
   });
 };
 
+const deleteEvent = (req, res) => {
+  const { id } = req.params;
+
+  const deleteBookingsQuery = "DELETE FROM bookings WHERE event_id = ?";
+
+  db.query(deleteBookingsQuery, [id], (err) => {
+    if (err) {
+      return res.status(500).json({ error: "Failed to delete bookings" });
+    }
+
+    const deleteEventQuery = "DELETE FROM events WHERE id = ?";
+    db.query(deleteEventQuery, [id], (err) => {
+      if (err) {
+        return res.status(500).json({ error: "Failed to delete event" });
+      }
+
+      res.json({ message: "Event and its bookings deleted successfully" });
+    });
+  });
+};
+
 module.exports = {
   createEvent,
   getEvents,
   getEvent,
   updateEvent,
   getAttendeesCount,
+  deleteEvent
 };

@@ -9,6 +9,7 @@ import API, {
   cancelBooking,
   getAvailableSeats,
   fetchReviews,
+  deleteEvent,
 } from "../api/eventAPI";
 import Loader from "../components/Loader";
 
@@ -21,19 +22,19 @@ const EventDetails = () => {
   const [canBook, setCanBook] = useState(true);
   const [numberOfPeople, setNumberOfPeople] = useState(1);
   const [reviews, setReviews] = useState([]);
+  const [reviewText, setReviewText] = useState("");
+  const [rating, setRating] = useState(5);
+  const user = useMemo(() => JSON.parse(localStorage.getItem("user")), []);
+  console.log(user);
+  console.log(event);
+  const isAdmin = user?.role === "admin";
+  const navigate = useNavigate();
   const eventEnded = () => {
     if (!event?.date) return false;
     const endDateTime = new Date(`${event.date}`);
 
     return new Date() > endDateTime;
   };
-
-  const [reviewText, setReviewText] = useState("");
-  const [rating, setRating] = useState(5);
-
-  const user = useMemo(() => JSON.parse(localStorage.getItem("user")), []);
-  const isAdmin = user?.role === "admin";
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,6 +103,19 @@ const EventDetails = () => {
     } catch (err) {
       console.error("Error submitting review:", err);
       alert("Failed to submit review. Try again.");
+    }
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this event?")) {
+      try {
+        await deleteEvent(event.id);
+        alert("Event deleted successfully");
+        navigate("/events");
+      } catch (err) {
+        alert("Error deleting event");
+        console.error(err);
+      }
     }
   };
 
@@ -221,18 +235,11 @@ const EventDetails = () => {
         </div>
       )}
 
-      <div className="mt-6 text-center">
+      <div className="mt-6 text-center space-y-4">
         {eventEnded() ? (
           <p className="text-gray-600 italic text-lg font-semibold">
             📅 This event has already happened.
           </p>
-        ) : isAdmin && event.created_by && event.created_by === user.id ? (
-          <button
-            onClick={handleEdit}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold"
-          >
-            Edit Event
-          </button>
         ) : isBooked ? (
           <button
             onClick={handleCancelBooking}
@@ -262,6 +269,23 @@ const EventDetails = () => {
         ) : null}
       </div>
 
+      {(isAdmin || event.created_by === user.id) && (
+        <div className="flex flex-wrap justify-center gap-4 mt-4">
+          <button
+            onClick={handleEdit}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold"
+          >
+            ✏️ Edit Event
+          </button>
+          <button
+            onClick={handleDelete}
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-semibold"
+          >
+            🗑️ Delete Event
+          </button>
+        </div>
+      )}
+      
       {eventEnded() && isBooked && (
         <div className="mt-8 border-t pt-4">
           <h2 className="text-xl font-semibold mb-2">Leave a Review</h2>

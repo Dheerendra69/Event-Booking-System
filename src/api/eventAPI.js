@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://event-booking-system-tqf3.onrender.com/api",
+  baseURL: "http://localhost:4000/api",
 });
 
 API.interceptors.request.use((config) => {
@@ -35,5 +35,7 @@ export const getAvailableSeats = (eventId) =>
   API.get(`/bookings/available-seats/${eventId}`);
 
 export const fetchReviews = (eventId) => API.get(`/reviews/${eventId}`);
+
+export const deleteEvent = (id) => API.delete(`/events/delete-event/${id}`);
 
 export default API;

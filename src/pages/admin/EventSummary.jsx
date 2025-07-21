@@ -51,6 +51,22 @@ const EventSummary = () => {
     }
   }, [event, loading, user, navigate]);
 
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this event?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      await API.delete(`/events/${event.id}`);
+      alert("Event deleted successfully");
+      navigate("/admin/events");
+    } catch (err) {
+      console.error("Error deleting event:", err);
+      alert("Failed to delete event");
+    }
+  };
+
   if (loading || !event || user?.id !== event.created_by) return <Loader />;
 
   return (
@@ -105,12 +121,19 @@ const EventSummary = () => {
         </div>
       )}
 
-      <div className="flex justify-center items-start mb-4 mt-4">
+      <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mt-6 mb-4">
         <button
           onClick={() => navigate(`/admin/editevent/${event.id}`)}
           className="text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
         >
           ✏️ Edit Event
+        </button>
+
+        <button
+          onClick={handleDelete}
+          className="text-sm bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+        >
+          🗑️ Delete Event
         </button>
       </div>
     </div>
