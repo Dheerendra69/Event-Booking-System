@@ -21,6 +21,9 @@ app.use(
 app.use(errorHandler);
 app.use(express.json());
 
+// to deal with cold start
+app.get("/api/ping", (req, res) => res.send("OK"));
+
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/events", eventRoutes);

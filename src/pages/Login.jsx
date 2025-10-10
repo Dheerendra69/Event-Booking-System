@@ -1,26 +1,85 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { login } from "../api/eventAPI";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const [secondsLeft, setSecondsLeft] = useState(90);
+  const [showLoader, setShowLoader] = useState(true);
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setTimeout(() => setShowLoader(true), 3000);
+
     try {
       const res = await login(form);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       navigate("/");
     } catch (err) {
-      alert("Invalid credentials");
+      alert("Invalid credentials or backend not ready yet");
+    } finally {
+      setLoading(false);
+      setShowLoader(false);
     }
   };
+
+  useEffect(() => {
+    if (!showLoader) return;
+    const interval = setInterval(() => {
+      setSecondsLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [showLoader]);
+
+  if (showLoader) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen space-y-6">
+        <div className="relative w-24 h-24">
+          {[0, 1, 2].map((i) => (
+            <motion.span
+              key={i}
+              className="absolute top-0 left-1/2 w-4 h-4 rounded-full"
+              style={{
+                backgroundColor:
+                  i === 0 ? "#3B82F6" : i === 1 ? "#10B981" : "#F59E0B",
+              }}
+              animate={{
+                rotate: 360,
+                x: [0, 36, 0],
+                y: [0, 36, 0],
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 2 + i * 0.3,
+                ease: "easeInOut",
+                delay: i * 0.2,
+              }}
+            />
+          ))}
+        </div>
+
+        <motion.p
+          animate={{
+            y: [0, -10, 0],
+            opacity: [0.6, 1, 0.6],
+          }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+          className="text-lg font-medium text-gray-700"
+        >
+          ⚙️ Backend waking up... please wait{" "}
+          <span className="font-semibold text-blue-600">{secondsLeft}s</span>
+        </motion.p>
+      </div>
+    );
+  }
 
   return (
     <form
@@ -46,8 +105,11 @@ const Login = () => {
         className="w-full border p-2 rounded"
         required
       />
-      <button className="w-full bg-blue-600 text-white p-2 rounded">
-        Login
+      <button
+        disabled={loading}
+        className="w-full bg-blue-600 text-white p-2 rounded"
+      >
+        {loading ? "Please wait..." : "Login"}
       </button>
     </form>
   );
