@@ -7,7 +7,7 @@ const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(90);
-  const [showLoader, setShowLoader] = useState(true);
+  const [showLoader, setShowLoader] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) =>
