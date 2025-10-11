@@ -21,8 +21,10 @@ app.use(
 app.use(errorHandler);
 app.use(express.json());
 
-// to deal with cold start
-app.get("/api/ping", (req, res) => res.send("OK"));
+// Waking-up the backend
+app.get("/api/wake-up", (req, res) => {
+  res.status(200).send("Backend awake and running!");
+});
 
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
