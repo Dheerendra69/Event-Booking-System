@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 require("../config/dbConnection");
+const allowedOrigins = require("../config/origins");
 
 const userRoutes = require("../routes/userRoutes");
 const eventRoutes = require("../routes/eventRoutes");
@@ -14,9 +15,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://event-bookin.netlify.app", "https://event-booking-system-beta.vercel.app"],
+    origin: allowedOrigins,
   })
 );
+
 
 app.use(errorHandler);
 app.use(express.json());
