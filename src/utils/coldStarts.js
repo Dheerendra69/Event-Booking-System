@@ -10,10 +10,10 @@ export const warmUpBackend = async () => {
   console.log("Warming up backend...");
   for (const url of urls) {
     try {
-      const res = await fetch(url);
+      await fetch(url);
     //   console.log(`Pinged: ${url} - ${res.status}`);
     } catch (err) {
-    //   console.log(`Failed to reach ${url}:`, err.message);
+      console.log(`Failed to reach ${url}:`, err.message);
     }
   }
   console.log("Warm-up completed!");
