@@ -13,7 +13,8 @@ export const warmUpBackend = async () => {
       await fetch(url);
     //   console.log(`Pinged: ${url} - ${res.status}`);
     } catch (err) {
-      console.log(`Failed to reach ${url}:`, err.message);
+      // console.log(`Failed to reach ${url}:`, err.message);
+      console.log("Failed to ping backend");
     }
   }
   console.log("Warm-up completed!");
