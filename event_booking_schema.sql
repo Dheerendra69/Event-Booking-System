@@ -1,16 +1,3 @@
-/*
--- Query: select * from users
-LIMIT 0, 1000
-
--- Date: 2025-07-14 09:46
-*/
-/*
--- Query: select * from users
-LIMIT 0, 1000
-
--- Date: 2025-07-14 09:46
-*/
-
 -- Create USERS table
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -75,6 +62,6 @@ CREATE TABLE IF NOT EXISTS reviews (
     rating INT CHECK (rating BETWEEN 1 AND 5),
     comment TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (event_id) REFERENCES events(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
 );
