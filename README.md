@@ -10,19 +10,29 @@
 
 ## 🚀 Features
 
-- User **signup** and **login** with JWT authentication  
-- View a list of upcoming **events** with event details (name, location, date, total seats, available seats)  
-- **Book** events based on the number of seats available  
-- Realtime update of **available seats** after successful booking  
-- Displays **confirmation message** upon successful booking  
+- User **signup** and **login** powered by JWT authentication  
+- Browse a list of upcoming **events** with key details including name, location, date, total seats, and available seats  
+- **Book events** with validation against real-time seat availability  
+- Automatic **seat count updates** after each successful booking  
+- Clear **confirmation messages** for successful reservations  
 
-**Alerts if:**
+**Alerts Triggered When:**
+- User attempts actions without being logged in  
+- Requested seat count exceeds the available seats  
 
-- User is not logged in  
-- Number of seats requested exceeds availability  
-- Simple and intuitive frontend using **React.js**  
-- Backend API built with **Node.js** and **Express.js**  
-- Relational data handling with **MySQL**  
+### Frontend & Backend
+- Intuitive and responsive interface built with **React.js**  
+- Backend implemented using **Node.js** and **Express.js**  
+- Robust relational data management supported by **MySQL**  
+
+## 👨‍💼 Admin Capabilities
+- Create new events  
+- View summarized event data  
+- Update existing events  
+- Delete events  
+- View bookings for events they have published  
+- Access only their own events, ensuring data isolation  
+
 
 ---
 

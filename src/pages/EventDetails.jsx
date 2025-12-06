@@ -25,8 +25,6 @@ const EventDetails = () => {
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(5);
   const user = useMemo(() => JSON.parse(localStorage.getItem("user")), []);
-  console.log(user);
-  console.log(event);
   const isAdmin = user?.role === "admin";
   const navigate = useNavigate();
   const eventEnded = () => {
