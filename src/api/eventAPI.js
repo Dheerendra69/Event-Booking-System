@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://event-booking-system-tqf3.onrender.com/api",
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}/api`,
 });
 
 API.interceptors.request.use((config) => {
